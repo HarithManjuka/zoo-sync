@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 //MongoDB Connection Configuration Professional setup with events and error handling
  
@@ -143,4 +143,4 @@ class Database {
 
 // Create and export singleton instance
 const database = new Database();
-module.exports = database;
+export default database;

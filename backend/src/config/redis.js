@@ -1,10 +1,11 @@
-// src/config/redis.js
-const { Redis } = require("@upstash/redis");
-require("dotenv").config();
+import { Redis } from "@upstash/redis";
+import dotenv from 'dotenv';
 
 /**
  * Upstash Redis Configuration for Rate Limiting
  */
+dotenv.config();
+
 class RedisClient {
   constructor() {
     this.client = null;
@@ -55,4 +56,4 @@ class RedisClient {
 }
 
 const redisClient = new RedisClient();
-module.exports = redisClient;
+export default redisClient;

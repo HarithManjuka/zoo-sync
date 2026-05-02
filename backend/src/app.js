@@ -1,8 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const rateLimiter = require('./middlewares/ratelimiter');
-const dotenv = require('dotenv');
-const database = require('./config/db');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import rateLimiter from './middlewares/ratelimiter.js';
+import database from './config/db.js';
 
 // Load environment variables
 dotenv.config();
@@ -11,7 +13,6 @@ dotenv.config();
 const app = express();
 
 // DATABASE CONNECTION 
-// Connect to MongoDB before starting server
 (async () => {
   await database.connect();
 })();
@@ -34,7 +35,6 @@ app.use(express.static('public'));
 
 // HEALTH CHECK
 app.get('/health', (req, res) => {
-  // Include database status in health check
   const dbStatus = database.getStatus();
   
   res.json({ 
@@ -50,11 +50,9 @@ app.get('/health', (req, res) => {
   });
 });
 
-
-// ========== API ROUTES (to be added later) ==========
-// app.use('/api/auth', authRoutes);
-// app.use('/api/animals', animalRoutes);
-// etc...
+// ========== API ROUTES ==========
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // TEST ROUTE
 app.get('/api/test', (req, res) => {
@@ -82,4 +80,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-module.exports = app;
+export default app;

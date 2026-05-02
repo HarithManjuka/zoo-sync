@@ -1,7 +1,6 @@
-// src/middlewares/ratelimiter.js
-const { Ratelimit } = require("@upstash/ratelimit");
-const { Redis } = require("@upstash/redis");
-require("dotenv").config(); // Force load env at top
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+import dotenv from 'dotenv';
 
 /**
  * Professional Rate Limiting Middleware
@@ -123,4 +122,4 @@ class RateLimiterMiddleware {
 
 // Create singleton instance
 const rateLimiterMiddleware = new RateLimiterMiddleware();
-module.exports = (req, res, next) => rateLimiterMiddleware.apply(req, res, next);
+export default (req, res, next) => rateLimiterMiddleware.apply(req, res, next);
