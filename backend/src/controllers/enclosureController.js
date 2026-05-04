@@ -1,4 +1,4 @@
-import Enclosure from '../models/Enclosure.js';
+import Enclosure from '../modules/Enclosure.js';
 import { generateEnclosureId, isValidEnclosureId } from '../utils/enclosureIdGenerator.js';
 
 // ============ CREATE ============
