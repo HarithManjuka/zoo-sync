@@ -9,7 +9,7 @@ import {
   updateMaintenanceStatus,
   getEnclosureStats
 } from '../controllers/enclosureController.js';
-import { protect, authorize } from '../middleware/authMiddleware.js';
+import { protect, authorize } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 

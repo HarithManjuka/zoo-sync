@@ -122,7 +122,6 @@ const EnclosureSchema = new mongoose.Schema({
 });
 
 // Indexes for better query performance
-EnclosureSchema.index({ enclosureId: 1 });
 EnclosureSchema.index({ status: 1, isActive: 1 });
 EnclosureSchema.index({ 'location.block': 1 });
 EnclosureSchema.index({ climateType: 1 });
