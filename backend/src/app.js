@@ -1,10 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import authRoutes from './routes/authRoutes.js';
-import userRoutes from './routes/userRoutes.js';
 import rateLimiter from './middlewares/ratelimiter.js';
 import database from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import enclosureRoutes from './routes/enclosureRoutes.js';
+
 
 // Load environment variables
 dotenv.config();
@@ -53,6 +55,8 @@ app.get('/health', (req, res) => {
 // ========== API ROUTES ==========
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/enclosures', enclosureRoutes);
+
 
 // TEST ROUTE
 app.get('/api/test', (req, res) => {
