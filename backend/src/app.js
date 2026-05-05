@@ -6,6 +6,7 @@ import database from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import enclosureRoutes from './routes/enclosureRoutes.js';
+import animalRoutes from './routes/animalRoutes.js';
 
 
 // Load environment variables
@@ -56,6 +57,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/enclosures', enclosureRoutes);
+app.use('/api/animals', animalRoutes);
 
 
 // TEST ROUTE
