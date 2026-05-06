@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .btn-primary {
+    @apply bg-zoo-600 hover:bg-zoo-700 text-white font-bold py-2 px-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-zoo-200 bg-white hover:bg-zoo-50 text-zoo-700 font-bold py-2 px-4 rounded-xl transition-all duration-300;
+  }
+}
