@@ -5,9 +5,12 @@ import {
   requestVerificationOTP,
   verifyEmail,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  resendVerificationOTP,
+  getCurrentUser
 } from '../controllers/authController.js';
 import upload from '../middlewares/upload.js';
+import { protect } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -18,5 +21,9 @@ router.post('/request-otp', requestVerificationOTP);
 router.post('/verify-email', verifyEmail);
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
+router.post('/resend-otp', resendVerificationOTP);
+
+// Protected routes
+router.get('/me', protect, getCurrentUser);
 
 export default router;
