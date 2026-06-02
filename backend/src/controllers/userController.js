@@ -2,6 +2,56 @@ import User from '../modules/User.js';
 import cloudinary from '../utils/cloudinary.js';
 import fs from 'fs';
 
+// Get all users (Admin only)
+export const getAllUsers = async (req, res) => {
+  try {
+    const { role, search, page = 1, limit = 50 } = req.query;
+    let query = {};
+    if (role) query.role = role;
+    if (search) {
+      query.$or = [
+        { fullName: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } }
+      ];
+    }
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const [users, total] = await Promise.all([
+      User.find(query).select('-password -otp -otpExpires -resetPasswordOtp -resetPasswordExpires')
+        .sort({ createdAt: -1 }).skip(skip).limit(parseInt(limit)),
+      User.countDocuments(query)
+    ]);
+    res.status(200).json({ success: true, total, count: users.length, users });
+  } catch (error) {
+    console.error('Get all users error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// Get user stats (Admin only)
+export const getUserStats = async (req, res) => {
+  try {
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const [totalUsers, createdToday, createdThisMonth] = await Promise.all([
+      User.countDocuments(),
+      User.countDocuments({ createdAt: { $gte: startOfToday } }),
+      User.countDocuments({ createdAt: { $gte: startOfMonth } }),
+    ]);
+
+    res.status(200).json({
+      success: true,
+      totalUsers,
+      createdToday,
+      createdThisMonth,
+    });
+  } catch (error) {
+    console.error('Get user stats error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
 const removeLocalFile = (filePath) => {
   if (filePath && fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);

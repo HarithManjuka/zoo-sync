@@ -5,11 +5,20 @@ import Navbar from '../../components/common/Navbar';
 import Footer from '../../components/common/Footer';
 
 const Dashboard = () => {
-  const { user, token } = useAuth();
+  const { user, token, isAuthReady } = useAuth();
 
-  if (!token) {
-    return <Navigate to="/login" />;
+  if (!isAuthReady) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-zoo-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
   }
+
+  if (!token) return <Navigate to="/login" />;
+
+  // Redirect Admin users to the full admin panel
+  if (user?.role === 'Admin') return <Navigate to="/admin" replace />;
 
   return (
     <div className="min-h-screen bg-gray-50">
