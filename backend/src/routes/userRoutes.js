@@ -1,5 +1,7 @@
 import express from 'express';
 import {
+  getAllUsers,
+  getUserStats,
   getUserProfile,
   updateUserProfile,
   deleteUserProfile
@@ -9,13 +11,15 @@ import upload from '../middlewares/upload.js';
 
 const router = express.Router();
 
+// Admin: get all users
+router.get('/stats', protect, authorize('Admin'), getUserStats);
+router.get('/', protect, authorize('Admin'), getAllUsers);
+
 // Protected routes (require login)
 router.get('/profile', protect, getUserProfile);
+router.get('/me', protect, getUserProfile);
 router.put('/profile', protect, upload.single('profileImage'), updateUserProfile);
+router.put('/me', protect, upload.single('profileImage'), updateUserProfile);
 router.delete('/profile', protect, deleteUserProfile);
-
-// Admin only routes (if you have userController functions for admin)
-// router.get('/', protect, authorize('Admin'), getAllUsers);
-// router.delete('/:id', protect, authorize('Admin'), deleteUserAdmin);
 
 export default router;
